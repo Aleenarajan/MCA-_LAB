@@ -19,14 +19,14 @@ public class UserAuthentication {
 			 
 		        Scanner sc = new Scanner(System.in);
 		        System.out.print("Please provide a username and password. . ");
-		        System.out.print("\nENTER USERNAME:");
+		        System.out.print("\nEnter Username:");
 		        username = sc.nextLine();
-		        System.out.print("ENTER PASSWORD:");
+		        System.out.print("ENTER Password:");
 		        password = sc.nextLine();
 		        System.out.print("\nYou are successfully registered!! Please log in to continue. .");
-		        System.out.print("\nENTER USERNAME:");
+		        System.out.print("\nEnter Username:");
 		        u_name = sc.nextLine();
-		        System.out.print("ENTER PASSWORD:");
+		        System.out.print("Enter Password:");
 		        p_wrd = sc.nextLine();
 		        sc.close();
 		        try
@@ -49,7 +49,7 @@ public class UserAuthentication {
 				 System.out.println("Authentication Successful!!!");
 			 }
 			 else if((u!=uname) || (p!=pwd)) {
-				 throw new UserAuthException("Authentication Failed!! Please recheck!!!");
+				 throw new UserAuthException("Authentication Failed!! recheck!!!");
 			 }
 			
 			 else {
