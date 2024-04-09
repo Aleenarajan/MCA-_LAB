@@ -1,0 +1,101 @@
+DELIMITER //
+CREATE PROCEDURE calculate_av_salary()
+BEGIN
+DECLARE cur_salary INT;
+DECLARE total_salary INTEGER DEFAULT 0;
+DECLARE num_rows INTEGER DEFAULT 0;
+DECLARE avg_salary INTEGER DEFAULT 0;
+DECLARE done BOOLEAN DEFAULT FALSE;
+DECLARE salary_cursor CURSOR FOR SELECT salary FROM employees;
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+OPEN salary_cursor;
+fetch_loop: LOOP
+FETCH salary_cursor INTO cur_salary;
+IF done THEN
+LEAVE fetch_loop;
+END IF;
+IF cur_salary IS NOT NULL THEN
+SET total_salary = total_salary + cur_salary;
+SET num_rows = num_rows + 1;
+END IF;
+END LOOP fetch_loop;
+CLOSE salary_cursor;
+
+IF num_rows > 0 THEN
+SET avg_salary = total_salary / num_rows;
+END IF;
+SELECT avg_salary;
+END //
+mysql> select * from employees;
++-------+---------+--------+
+| empid | empname | salary |
++-------+---------+--------+
+|     1 | Ajay    |  25000 |
+|     2 | Vijay   |  30000 |
+|     3 | Sam     |  35000 |
+|     4 | Bob     |  25000 |
++-------+---------+--------+
+4 rows in set (0.01 sec)
+
+delimiter ;
+mysql> call calculate_av_salary();
++------------+
+| avg_salary |
++------------+
+|      28750 |
++------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
+mysql> delimiter $$
+mysql> create procedure list_names(inout name_list varchar(4000))
+    -> begin
+    -> declare is_done integer default 0;
+    -> declare s_name varchar(100)default"";
+    -> declare stud_cursor cursor for select name from student;
+    -> declare continue handler for not found set is_done=1;
+    -> open stud_cursor;
+    -> get_list:loop
+    -> fetch stud_cursor into s_name;
+    -> if is_done=1 then
+    -> leave get_list;
+    -> end if;
+    -> set name_list=concat(s_name,";",name_list);
+    -> end loop get_list;
+    -> close stud_cursor;
+    -> end $$
+
+
+mysql> set@name_list="";
+    -> //
+    -> delimiter ;
+    -> end $$
+Query OK, 0 rows affected (0.01 sec)
+
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '//
+delimiter ;end' at line 1
+mysql> delimiter ;
+mysql> set@name_list="";
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call list_names(@name_list);
+Query OK, 0 rows affected (0.00 sec)
+
+
+
+mysql> set@name_list="";
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call list_names(@name_list);
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select @name_list;
++------------------+
+| @name_list       |
++------------------+
+| meena;meenakshi; |
++------------------+
+1 row in set (0.00 sec)
+
