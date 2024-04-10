@@ -2,7 +2,7 @@
 echo "Student Marksheet"
 echo "Enter Operating System Marks:"
 read OS
-echo "Enater Networking Marks:"
+echo "Enter Networking Marks:"
 read Networking
 echo "Enater Java Marks:"
 read Java
