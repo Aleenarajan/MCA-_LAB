@@ -1,0 +1,40 @@
+> use ProductCatalog
+switched to db ProductCatalog
+> db.createCollection("Products")
+{ "ok" : 1 }
+> db.Products.insertMany([
+... { "ProductID": 1, "ProductName": "Laptop", "Price": 1000, "Quantity": 20 },
+... { "ProductID": 2, "ProductName": "Smartphone", "Price": 500, "Quantity": 30
+... };
+... ])
+2024-04-12T10:49:16.230+0530 E QUERY    [thread1] SyntaxError: missing ] after element list @(shell):4:1
+> db.Products.insertMany([ { "ProductID": 1, "ProductName": "Laptop", "Price": 1000, "Quantity": 20 }, { "ProductID": 2, "ProductName": "Smartphone", "Price": 500, "Quantity": 30 }, ])
+{
+	"acknowledged" : true,
+	"insertedIds" : [
+		ObjectId("6618c482e7bf8139243b8d1f"),
+		ObjectId("6618c482e7bf8139243b8d20")
+	]
+}
+> db.Products.find().pretty()
+{
+	"_id" : ObjectId("6618c482e7bf8139243b8d1f"),
+	"ProductID" : 1,
+	"ProductName" : "Laptop",
+	"Price" : 1000,
+	"Quantity" : 20
+}
+{
+	"_id" : ObjectId("6618c482e7bf8139243b8d20"),
+	"ProductID" : 2,
+	"ProductName" : "Smartphone",
+	"Price" : 500,
+	"Quantity" : 30
+}
+> db.Products.updateOne(
+... { "ProductName": "Laptop" },
+... { $inc: { "Quantity": 10 } }
+... )
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+> db.Products.deleteOne({ "ProductName": "Smartphone" })
+{ "acknowledged" : true, "deletedCount" : 1 }

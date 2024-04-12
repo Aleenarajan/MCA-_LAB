@@ -1,0 +1,297 @@
+MongoDB shell version v3.4.24
+connecting to: mongodb://127.0.0.1:27017
+MongoDB server version: 3.4.24
+Server has startup warnings: 
+2024-04-09T15:07:23.773+0530 I STORAGE  [initandlisten] 
+2024-04-09T15:07:23.773+0530 I STORAGE  [initandlisten] ** WARNING: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine
+2024-04-09T15:07:23.773+0530 I STORAGE  [initandlisten] **          See http://dochub.mongodb.org/core/prodnotes-filesystem
+2024-04-09T15:07:25.066+0530 I CONTROL  [initandlisten] 
+2024-04-09T15:07:25.066+0530 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+2024-04-09T15:07:25.066+0530 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+2024-04-09T15:07:25.066+0530 I CONTROL  [initandlisten] 
+2024-04-09T15:07:25.066+0530 I CONTROL  [initandlisten] 
+2024-04-09T15:07:25.066+0530 I CONTROL  [initandlisten] ** WARNING: /sys/kernel/mm/transparent_hugepage/defrag is 'always'.
+2024-04-09T15:07:25.066+0530 I CONTROL  [initandlisten] **        We suggest setting it to 'never'
+2024-04-09T15:07:25.066+0530 I CONTROL  [initandlisten] 
+> use Employee
+switched to db Employee
+> db.createCollection("EMPL")
+{
+	"ok" : 0,
+	"errmsg" : "db already exists with different case already have: [employee] trying to create [Employee]",
+	"code" : 13297,
+	"codeName" : "DatabaseDifferCase"
+}
+> db.EMPL.insertMany([
+... {"Empno":1,"Name":"John Doe","Salary":60000,"Role":"Manager"},
+... {"Empno":2,"Name":"Alice Smith","Salary":50000,"Role":"Developer"},
+... ])
+2024-04-09T15:28:03.962+0530 E QUERY    [thread1] BulkWriteError: write error at item 0 in bulk operation :
+BulkWriteError({
+	"writeErrors" : [
+		{
+			"index" : 0,
+			"code" : 13297,
+			"errmsg" : "db already exists with different case already have: [employee] trying to create [Employee]",
+			"op" : {
+				"_id" : ObjectId("6615112b767bacec329ea324"),
+				"Empno" : 1,
+				"Name" : "John Doe",
+				"Salary" : 60000,
+				"Role" : "Manager"
+			}
+		}
+	],
+	"writeConcernErrors" : [ ],
+	"nInserted" : 0,
+	"nUpserted" : 0,
+	"nMatched" : 0,
+	"nModified" : 0,
+	"nRemoved" : 0,
+	"upserted" : [ ]
+})
+BulkWriteError@src/mongo/shell/bulk_api.js:372:48
+BulkWriteResult/this.toError@src/mongo/shell/bulk_api.js:336:24
+Bulk/this.execute@src/mongo/shell/bulk_api.js:1173:1
+DBCollection.prototype.insertMany@src/mongo/shell/crud_api.js:302:5
+@(shell):1:1
+> db.EMPL.insertMany([ {"Empno":1,"Name":"John Doe","Salary":60000,"Role":"Manager"}, {"Empno":2,"Name":"Alice Smith","Salary":50000,"Role":"Developer"} ])
+2024-04-09T15:31:47.713+0530 E QUERY    [thread1] BulkWriteError: write error at item 0 in bulk operation :
+BulkWriteError({
+	"writeErrors" : [
+		{
+			"index" : 0,
+			"code" : 13297,
+			"errmsg" : "db already exists with different case already have: [employee] trying to create [Employee]",
+			"op" : {
+				"_id" : ObjectId("6615120b767bacec329ea326"),
+				"Empno" : 1,
+				"Name" : "John Doe",
+				"Salary" : 60000,
+				"Role" : "Manager"
+			}
+		}
+	],
+	"writeConcernErrors" : [ ],
+	"nInserted" : 0,
+	"nUpserted" : 0,
+	"nMatched" : 0,
+	"nModified" : 0,
+	"nRemoved" : 0,
+	"upserted" : [ ]
+})
+BulkWriteError@src/mongo/shell/bulk_api.js:372:48
+BulkWriteResult/this.toError@src/mongo/shell/bulk_api.js:336:24
+Bulk/this.execute@src/mongo/shell/bulk_api.js:1173:1
+DBCollection.prototype.insertMany@src/mongo/shell/crud_api.js:302:5
+@(shell):1:1
+> db.EMPL.insertMany([{"Empno":1,"Name":"John Doe","Salary":60000,"Role":"Manager"}, {"Empno":2,"Name":"Alice Smith","Salary":50000,"Role":"Developer"}])
+2024-04-09T15:34:11.069+0530 E QUERY    [thread1] BulkWriteError: write error at item 0 in bulk operation :
+BulkWriteError({
+	"writeErrors" : [
+		{
+			"index" : 0,
+			"code" : 13297,
+			"errmsg" : "db already exists with different case already have: [employee] trying to create [Employee]",
+			"op" : {
+				"_id" : ObjectId("6615129b767bacec329ea328"),
+				"Empno" : 1,
+				"Name" : "John Doe",
+				"Salary" : 60000,
+				"Role" : "Manager"
+			}
+		}
+	],
+	"writeConcernErrors" : [ ],
+	"nInserted" : 0,
+	"nUpserted" : 0,
+	"nMatched" : 0,
+	"nModified" : 0,
+	"nRemoved" : 0,
+	"upserted" : [ ]
+})
+BulkWriteError@src/mongo/shell/bulk_api.js:372:48
+BulkWriteResult/this.toError@src/mongo/shell/bulk_api.js:336:24
+Bulk/this.execute@src/mongo/shell/bulk_api.js:1173:1
+DBCollection.prototype.insertMany@src/mongo/shell/crud_api.js:302:5
+@(shell):1:1
+> db.EMPL.insertMany([
+... { "Empno": 1, "Name": "John Doe", "Salary": 60000, "Role": "Manager" },
+... { "Empno": 2, "Name": "Alice Smith", "Salary": 50000, "Role": "Developer" },
+
+... // Insert more records here...
+... ])
+2024-04-09T15:35:14.909+0530 E QUERY    [thread1] BulkWriteError: write error at item 0 in bulk operation :
+BulkWriteError({
+	"writeErrors" : [
+		{
+			"index" : 0,
+			"code" : 13297,
+			"errmsg" : "db already exists with different case already have: [employee] trying to create [Employee]",
+			"op" : {
+				"_id" : ObjectId("661512da767bacec329ea32a"),
+				"Empno" : 1,
+				"Name" : "John Doe",
+				"Salary" : 60000,
+				"Role" : "Manager"
+			}
+		}
+	],
+	"writeConcernErrors" : [ ],
+	"nInserted" : 0,
+	"nUpserted" : 0,
+	"nMatched" : 0,
+	"nModified" : 0,
+	"nRemoved" : 0,
+	"upserted" : [ ]
+})
+BulkWriteError@src/mongo/shell/bulk_api.js:372:48
+BulkWriteResult/this.toError@src/mongo/shell/bulk_api.js:336:24
+Bulk/this.execute@src/mongo/shell/bulk_api.js:1173:1
+DBCollection.prototype.insertMany@src/mongo/shell/crud_api.js:302:5
+@(shell):1:1
+> db.EMPL.insertMany([ { "Empno": 1, "Name": "John Doe", "Salary": 60000, "Role": "Manager" }, { "Empno": 2, "Name": "Alice Smith", "Salary": 50000, "Role": "Developer" }])
+2024-04-09T15:36:22.380+0530 E QUERY    [thread1] BulkWriteError: write error at item 0 in bulk operation :
+BulkWriteError({
+	"writeErrors" : [
+		{
+			"index" : 0,
+			"code" : 13297,
+			"errmsg" : "db already exists with different case already have: [employee] trying to create [Employee]",
+			"op" : {
+				"_id" : ObjectId("6615131e767bacec329ea32c"),
+				"Empno" : 1,
+				"Name" : "John Doe",
+				"Salary" : 60000,
+				"Role" : "Manager"
+			}
+		}
+	],
+	"writeConcernErrors" : [ ],
+	"nInserted" : 0,
+	"nUpserted" : 0,
+	"nMatched" : 0,
+	"nModified" : 0,
+	"nRemoved" : 0,
+	"upserted" : [ ]
+})
+BulkWriteError@src/mongo/shell/bulk_api.js:372:48
+BulkWriteResult/this.toError@src/mongo/shell/bulk_api.js:336:24
+Bulk/this.execute@src/mongo/shell/bulk_api.js:1173:1
+DBCollection.prototype.insertMany@src/mongo/shell/crud_api.js:302:5
+@(shell):1:1
+> db.EMPL.insertMany([ { "Empno": 1, "Name": "John Doe", "Salary": 60000, "Role": "Manager" }, { "Empno": 2, "Name": "Alice Smith", "Salary": 50000, "Role": "Developer" }])
+2024-04-09T15:37:24.107+0530 E QUERY    [thread1] BulkWriteError: write error at item 0 in bulk operation :
+BulkWriteError({
+	"writeErrors" : [
+		{
+			"index" : 0,
+			"code" : 13297,
+			"errmsg" : "db already exists with different case already have: [employee] trying to create [Employee]",
+			"op" : {
+				"_id" : ObjectId("6615135c767bacec329ea32e"),
+				"Empno" : 1,
+				"Name" : "John Doe",
+				"Salary" : 60000,
+				"Role" : "Manager"
+			}
+		}
+	],
+	"writeConcernErrors" : [ ],
+	"nInserted" : 0,
+	"nUpserted" : 0,
+	"nMatched" : 0,
+	"nModified" : 0,
+	"nRemoved" : 0,
+	"upserted" : [ ]
+})
+BulkWriteError@src/mongo/shell/bulk_api.js:372:48
+BulkWriteResult/this.toError@src/mongo/shell/bulk_api.js:336:24
+Bulk/this.execute@src/mongo/shell/bulk_api.js:1173:1
+DBCollection.prototype.insertMany@src/mongo/shell/crud_api.js:302:5
+@(shell):1:1
+> db.EMPL.find()
+> db.EMPL.insertMany([{ "Empno": 1, "Name": "John Doe", "Salary": 60000, "Role": "Manager" }, { "Empno": 2, "Name": "Alice Smith", "Salary": 50000, "Role": "Developer" }])
+2024-04-09T15:38:24.586+0530 E QUERY    [thread1] BulkWriteError: write error at item 0 in bulk operation :
+BulkWriteError({
+	"writeErrors" : [
+		{
+			"index" : 0,
+			"code" : 13297,
+			"errmsg" : "db already exists with different case already have: [employee] trying to create [Employee]",
+			"op" : {
+				"_id" : ObjectId("66151398767bacec329ea330"),
+				"Empno" : 1,
+				"Name" : "John Doe",
+				"Salary" : 60000,
+				"Role" : "Manager"
+			}
+		}
+	],
+	"writeConcernErrors" : [ ],
+	"nInserted" : 0,
+	"nUpserted" : 0,
+	"nMatched" : 0,
+	"nModified" : 0,
+	"nRemoved" : 0,
+	"upserted" : [ ]
+})
+BulkWriteError@src/mongo/shell/bulk_api.js:372:48
+BulkWriteResult/this.toError@src/mongo/shell/bulk_api.js:336:24
+Bulk/this.execute@src/mongo/shell/bulk_api.js:1173:1
+DBCollection.prototype.insertMany@src/mongo/shell/crud_api.js:302:5
+@(shell):1:1
+> show db
+2024-04-09T15:40:56.157+0530 E QUERY    [thread1] Error: don't know how to show [db] :
+shellHelper.show@src/mongo/shell/utils.js:996:11
+shellHelper@src/mongo/shell/utils.js:704:15
+@(shellhelp2):1:1
+> show dbs
+admin     0.000GB
+emp       0.000GB
+employee  0.000GB
+local     0.000GB
+resh      0.000GB
+> use employee
+switched to db employee
+> db.createCollection("EMPL")
+{
+	"ok" : 0,
+	"errmsg" : "a collection 'employee.EMPL' already exists",
+	"code" : 48,
+	"codeName" : "NamespaceExists"
+}
+> db.EMPL.insertMany([{ "Empno": 1, "Name": "John Doe", "Salary": 60000, "Role": "Manager" }, { "Empno": 2, "Name": "Alice Smith", "Salary": 50000, "Role": "Developer" }])
+{
+	"acknowledged" : true,
+	"insertedIds" : [
+		ObjectId("66151459767bacec329ea332"),
+		ObjectId("66151459767bacec329ea333")
+	]
+}
+> db.EMPL.find()
+{ "_id" : ObjectId("66151459767bacec329ea332"), "Empno" : 1, "Name" : "John Doe", "Salary" : 60000, "Role" : "Manager" }
+{ "_id" : ObjectId("66151459767bacec329ea333"), "Empno" : 2, "Name" : "Alice Smith", "Salary" : 50000, "Role" : "Developer" }
+> db.EMPL.find().pretty()
+{
+	"_id" : ObjectId("66151459767bacec329ea332"),
+	"Empno" : 1,
+	"Name" : "John Doe",
+	"Salary" : 60000,
+	"Role" : "Manager"
+}
+{
+	"_id" : ObjectId("66151459767bacec329ea333"),
+	"Empno" : 2,
+	"Name" : "Alice Smith",
+	"Salary" : 50000,
+	"Role" : "Developer"
+}
+> db.EMPL.find({"Role":"Manager"}).pretty()
+{
+	"_id" : ObjectId("66151459767bacec329ea332"),
+	"Empno" : 1,
+	"Name" : "John Doe",
+	"Salary" : 60000,
+	"Role" : "Manager"
+}

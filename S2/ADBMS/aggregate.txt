@@ -1,0 +1,134 @@
+> use students
+switched to db students
+> db.students.insert({name:"Tony",age:17,id:1,sec:”A”,subject:["physics",”maths"]})
+2024-04-12T10:57:33.120+0530 E QUERY    [thread1] SyntaxError: illegal character @(shell):1:48
+> db.students.insert({name:"Tony",age:17,id:1,sec:"A",subject:["physics","maths"]})
+WriteResult({ "nInserted" : 1 })
+> db.students.insert({name:"Steve",age:37,id:2,sec:"A"})
+WriteResult({ "nInserted" : 1 })
+> db.students.insert({name:"Natasha",age:17,id:3,sec:"B",subject:["physics","english"]})
+WriteResult({ "nInserted" : 1 })
+> db.students.insert({name:"Bruce",age:21,id:4,sec:"B",subject:["physics","maths","biology","chemistry"]})
+WriteResult({ "nInserted" : 1 })
+> db.students.insert({name:"Nick",age:40,id:5,sec:"B",subject:["english"]})
+WriteResult({ "nInserted" : 1 })
+> db.students.insert({name:"Groot",age:4,id:6,sec:"A",subject:["english"]})
+WriteResult({ "nInserted" : 1 })
+> db.students.insert({name:"Thanos",age:4,id:7,sec:"A",subject:["physics","maths","chemistry"]})
+WriteResult({ "nInserted" : 1 })
+> db.students.find().pretty()
+{
+	"_id" : ObjectId("6618c70ae7bf8139243b8d24"),
+	"name" : "Tony",
+	"age" : 17,
+	"id" : 1,
+	"sec" : "A",
+	"subject" : [
+		"physics",
+		"maths"
+	]
+}
+{
+	"_id" : ObjectId("6618c7b0e7bf8139243b8d25"),
+	"name" : "Steve",
+	"age" : 37,
+	"id" : 2,
+	"sec" : "A"
+}
+{
+	"_id" : ObjectId("6618c7d7e7bf8139243b8d26"),
+	"name" : "Natasha",
+	"age" : 17,
+	"id" : 3,
+	"sec" : "B",
+	"subject" : [
+		"physics",
+		"english"
+	]
+}
+{
+	"_id" : ObjectId("6618c811e7bf8139243b8d27"),
+	"name" : "Bruce",
+	"age" : 21,
+	"id" : 4,
+	"sec" : "B",
+	"subject" : [
+		"physics",
+		"maths",
+		"biology",
+		"chemistry"
+	]
+}
+{
+	"_id" : ObjectId("6618c851e7bf8139243b8d28"),
+	"name" : "Nick",
+	"age" : 40,
+	"id" : 5,
+	"sec" : "B",
+	"subject" : [
+		"english"
+	]
+}
+{
+	"_id" : ObjectId("6618c8b3e7bf8139243b8d29"),
+	"name" : "Groot",
+	"age" : 4,
+	"id" : 6,
+	"sec" : "A",
+	"subject" : [
+		"english"
+	]
+}
+{
+	"_id" : ObjectId("6618c8e3e7bf8139243b8d2a"),
+	"name" : "Thanos",
+	"age" : 4,
+	"id" : 7,
+	"sec" : "A",
+	"subject" : [
+		"physics",
+		"maths",
+		"chemistry"
+	]
+}
+
+> db.students.aggregate([{$match:{sec:"B"}},{$count:"Total student in sec:B"}])
+{ "Total student in sec:B" : 3 }
+
+
+
+
+
+> db.students.aggregate([{$match:{age:{$gt:30 } } }]) .pretty()
+{
+	"_id" : ObjectId("6618c7b0e7bf8139243b8d25"),
+	"name" : "Steve",
+	"age" : 37,
+	"id" : 2,
+	"sec" : "A"
+}
+{
+	"_id" : ObjectId("6618c851e7bf8139243b8d28"),
+	"name" : "Nick",
+	"age" : 40,
+	"id" : 5,
+	"sec" : "B",
+	"subject" : [
+		"english"
+	]
+}
+> db.students.aggregate([{'$sort': {'age':1 } }])
+{ "_id" : ObjectId("6618c8b3e7bf8139243b8d29"), "name" : "Groot", "age" : 4, "id" : 6, "sec" : "A", "subject" : [ "english" ] }
+{ "_id" : ObjectId("6618c8e3e7bf8139243b8d2a"), "name" : "Thanos", "age" : 4, "id" : 7, "sec" : "A", "subject" : [ "physics", "maths", "chemistry" ] }
+{ "_id" : ObjectId("6618c70ae7bf8139243b8d24"), "name" : "Tony", "age" : 17, "id" : 1, "sec" : "A", "subject" : [ "physics", "maths" ] }
+{ "_id" : ObjectId("6618c7d7e7bf8139243b8d26"), "name" : "Natasha", "age" : 17, "id" : 3, "sec" : "B", "subject" : [ "physics", "english" ] }
+{ "_id" : ObjectId("6618c811e7bf8139243b8d27"), "name" : "Bruce", "age" : 21, "id" : 4, "sec" : "B", "subject" : [ "physics", "maths", "biology", "chemistry" ] }
+{ "_id" : ObjectId("6618c7b0e7bf8139243b8d25"), "name" : "Steve", "age" : 37, "id" : 2, "sec" : "A" }
+{ "_id" : ObjectId("6618c851e7bf8139243b8d28"), "name" : "Nick", "age" : 40, "id" : 5, "sec" : "B", "subject" : [ "english" ] }
+> db.students.count()
+7
+> db.students.distinct("name")
+[ "Tony", "Steve", "Natasha", "Bruce", "Nick", "Groot", "Thanos" ]
+> db.students.distinct("age")
+[ 17, 37, 21, 40, 4 ]
+

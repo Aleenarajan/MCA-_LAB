@@ -1,0 +1,81 @@
+> use employees
+switched to db employees
+> db.createcollection("EMPL")
+2024-04-12T11:54:28.272+0530 E QUERY    [thread1] TypeError: db.createcollection is not a function :
+@(shell):1:1
+> db.createCollection("EMPL")
+{ "ok" : 1 }
+> db.EMPL.insertMany([
+... { "Empno": 1, "Name": "John Doe", "Salary": 60000, "Role": "Manager" },
+... { "Empno": 2, "Name": "Alice Smith", "Salary": 50000, "Role": "Developer" },
+... ])
+{
+	"acknowledged" : true,
+	"insertedIds" : [
+		ObjectId("6618d408e7bf8139243b8d2b"),
+		ObjectId("6618d408e7bf8139243b8d2c")
+	]
+}
+> db.EMPL.find() .pretty()
+{
+	"_id" : ObjectId("6618d408e7bf8139243b8d2b"),
+	"Empno" : 1,
+	"Name" : "John Doe",
+	"Salary" : 60000,
+	"Role" : "Manager"
+}
+{
+	"_id" : ObjectId("6618d408e7bf8139243b8d2c"),
+	"Empno" : 2,
+	"Name" : "Alice Smith",
+	"Salary" : 50000,
+	"Role" : "Developer"
+}
+> db.createUser({
+... user:"admin",
+... pwd:"admin123",
+... roles:["readWrite","dbAdmin"]
+... }]);
+2024-04-12T12:02:28.474+0530 E QUERY    [thread1] SyntaxError: missing ) after argument list @(shell):5:1
+> db.createUser({
+... user: "admin",
+... pwd: "admin123",
+... roles: ["readWrite", "dbAdmin"]
+... });
+Successfully added user: { "user" : "admin", "roles" : [ "readWrite", "dbAdmin" ] }
+> db.createUser({
+... user: "developer",
+... pwd: "dev123",
+... roles: ["readWrite"]
+... });
+Successfully added user: { "user" : "developer", "roles" : [ "readWrite" ] }
+> show users
+{
+	"_id" : "employees.admin",
+	"userId" : BinData(4,"zCjdxIFSSPiY3YSwozVeyQ=="),
+	"user" : "admin",
+	"db" : "employees",
+	"roles" : [
+		{
+			"role" : "readWrite",
+			"db" : "employees"
+		},
+		{
+			"role" : "dbAdmin",
+			"db" : "employees"
+		}
+	]
+}
+{
+	"_id" : "employees.developer",
+	"userId" : BinData(4,"nJZweYvmTIuaz62kEYv9HQ=="),
+	"user" : "developer",
+	"db" : "employees",
+	"roles" : [
+		{
+			"role" : "readWrite",
+			"db" : "employees"
+		}
+	]
+}
+
